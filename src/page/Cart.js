@@ -179,7 +179,7 @@ const Cart = () => {
       }, 2000);
     }
   };
-  
+
   return (
     <div className="p-2 md:p-4">
       <h2 className="text-lg md:text-2xl font-bold text-slate-600">
@@ -215,7 +215,7 @@ const Cart = () => {
               <p className="font-bold">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
-                  currency: "VND",
+                  currency: "USD", // <-- đổi VND thành USD
                 }).format(totalPrice)}
               </p>
             </div>
@@ -225,7 +225,7 @@ const Cart = () => {
               <p className="font-bold">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
-                  currency: "VND",
+                  currency: "USD", // <-- đổi VND thành USD
                 }).format(discountValue)}
               </p>
             </div>
@@ -235,7 +235,7 @@ const Cart = () => {
               <p className="font-bold">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
-                  currency: "VND",
+                  currency: "USD", // <-- đổi VND thành USD
                 }).format(totalPrice - discountValue)}
               </p>
             </div>
