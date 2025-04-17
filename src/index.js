@@ -22,6 +22,7 @@ import { Provider } from "react-redux";
 import Cart from "./page/Cart";
 import Success from "./page/Success";
 import Cancel from "./page/Cancel";
+import Failed from "./page/Failed"
 import ScrollToTop from "./utility/scrollToTop";
 import VerifyOtp from "./page/VerifyOtp";
 import ForgotPassword from "./page/ForgotPassword";
@@ -44,6 +45,7 @@ const router = createBrowserRouter(
       <Route path="cart" element={<Cart />} />
       <Route path="success" element={<Success />} />
       <Route path="cancel" element={<Cancel />} />
+      <Route path="failed" element={<Failed />} />
       <Route path="verifyotp" element={<VerifyOtp />} />
       <Route path="forgotpassword" element={<ForgotPassword />} />
       <Route path="reset-password/:token" element={<ResetPassword />} />

@@ -137,33 +137,39 @@ const Cart = () => {
   const handlePayment = async () => {
     if (user.email) {
       try {
+        const finalPrice = totalPrice - discountValue; // Tính toán tổng tiền cuối cùng
+
         const res = await fetch(
-          `${process.env.REACT_APP_SERVER_DOMIN}/create-mock-checkout-session`,
+          `${process.env.REACT_APP_SERVER_DOMIN}/api/create-payos-payment`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(productCartItem),
+            body: JSON.stringify({ totalPrice: finalPrice }),
           }
         );
 
         if (!res.ok) {
+          // Nếu API trả về mã lỗi, lấy thông tin chi tiết lỗi
           const errorData = await res.json();
           toast.error(
-            errorData.error || "Đã xảy ra lỗi với thanh toán mô phỏng"
+            errorData.error || "Đã xảy ra lỗi khi tạo yêu cầu thanh toán."
           );
-          return setTimeout(() => {
-            navigate("/cancel");
-          }, 2000);
+          return;
         }
 
-        toast.success("Đang chuyển hướng đến thanh toán ...");
-        setTimeout(() => {
-          navigate("/success");
-        }, 2000);
+        const data = await res.json();
+        if (data && data.checkoutUrl) {
+          toast.success("Đang chuyển hướng đến trang thanh toán...");
+          setTimeout(() => {
+            window.location.href = data.checkoutUrl; // Chuyển hướng đến PayOS
+          }, 1000);
+        } else {
+          toast.error("Không nhận được URL thanh toán từ backend.");
+        }
       } catch (error) {
-        console.error("Error during payment:", error);
+        console.error("Lỗi khi gọi API tạo thanh toán PayOS:", error);
         toast.error("Đã xảy ra lỗi khi thanh toán.");
       }
     } else {
@@ -173,7 +179,7 @@ const Cart = () => {
       }, 2000);
     }
   };
-
+  
   return (
     <div className="p-2 md:p-4">
       <h2 className="text-lg md:text-2xl font-bold text-slate-600">
@@ -207,28 +213,30 @@ const Cart = () => {
             <div className="flex justify-between items-center py-2 text-lg border-b">
               <p className="text-gray-700">Tổng Giá</p>
               <p className="font-bold">
-                <span className="text-red-500">$</span>
-                <span className="text-gray-900">{totalPrice.toFixed(2)}</span>
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(totalPrice)}
               </p>
             </div>
 
             <div className="flex justify-between items-center py-2 text-lg border-b">
               <p className="text-gray-700">Giảm Giá</p>
               <p className="font-bold">
-                <span className="text-red-500">- $</span>
-                <span className="text-gray-900">
-                  {discountValue.toFixed(2)}
-                </span>
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(discountValue)}
               </p>
             </div>
 
             <div className="flex justify-between items-center py-2 text-lg border-b">
               <p className="text-gray-700">Tổng Tiền Cuối Cùng</p>
               <p className="font-bold">
-                <span className="text-red-500">$</span>
-                <span className="text-gray-900">
-                  {(totalPrice - discountValue).toFixed(2)}
-                </span>
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(totalPrice - discountValue)}
               </p>
             </div>
 
