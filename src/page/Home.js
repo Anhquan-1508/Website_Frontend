@@ -45,7 +45,7 @@ const Home = () => {
           <div className="flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full">
             <p className="text-sm font-medium text-slate-900">Bike Delivery</p>
             <img
-              src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
+              src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png" alt="Bike delivery icon" 
               className="h-7"
             />
           </div>

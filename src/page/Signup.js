@@ -39,8 +39,9 @@ const Signup = () => {
     const { firstName, lastName, email, password, confirmPassword, image } = data;
     if (firstName && lastName && email && password && confirmPassword && image) {
       if (password === confirmPassword) {
+        // Thay đổi đường dẫn API từ /send-otp sang /signup
         const fetchData = await fetch(
-          `${process.env.REACT_APP_SERVER_DOMIN}/send-otp`,
+          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,
           {
             method: 'POST',
             headers: {
@@ -49,16 +50,13 @@ const Signup = () => {
             body: JSON.stringify({firstName, lastName, email, password, confirmPassword, image}),
           },
         );
-
+  
         const dataRes = await fetchData.json();
-        // alert(dataRes.message);
         toast(dataRes.message);
-        // console.log(dataRes);
-        
+          
         if (dataRes.alert) {
-          // navigate('/login');
-          // console.log('Success');
-          navigate('/verifyotp', {state: {email}})
+          // Điều hướng tới trang verify OTP sau khi đăng ký thành công
+          navigate('/verifyotp', { state: { email } });
         }
       } else {
         toast.error('Passwords do not match');

@@ -22,13 +22,13 @@ import { Provider } from "react-redux";
 import Cart from "./page/Cart";
 import Success from "./page/Success";
 import Cancel from "./page/Cancel";
-import Failed from "./page/Failed"
+import Failed from "./page/Failed";
 import ScrollToTop from "./utility/scrollToTop";
-import VerifyOtp from "./page/VerifyOtp";
 import ForgotPassword from "./page/ForgotPassword";
 import ResetPassword from "./page/ResetPassword";
 import UpdateIF from "./page/UpdateIF";
-import Profile from "./page/Profile"
+import Profile from "./page/Profile";
+import VerifyOtp from "./page/VerifyOtp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,7 +49,7 @@ const router = createBrowserRouter(
       <Route path="verifyotp" element={<VerifyOtp />} />
       <Route path="forgotpassword" element={<ForgotPassword />} />
       <Route path="reset-password/:token" element={<ResetPassword />} />
-      <Route path ="/profile/:userId" element = {<Profile/>} />
+      <Route path="/profile/:userId" element={<Profile />} />
       <Route path="updateif" element={<UpdateIF />} />
     </Route>
   )
