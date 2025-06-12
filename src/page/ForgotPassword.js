@@ -42,44 +42,46 @@ const ForgotPassword = () => {
   };
 
   const handleResetPassword = async (e) => {
-    e.preventDefault();
-    
-    if (!otp || !newPassword || !confirmPassword) {
-      toast.error('Vui lòng điền đầy đủ thông tin');
-      return;
-    }
+  e.preventDefault();
 
-    if (newPassword !== confirmPassword) {
-      toast.error('Mật khẩu không khớp');
-      return;
-    }
+  if (!otp || !newPassword || !confirmPassword) {
+    toast.error('Vui lòng điền đầy đủ thông tin');
+    return;
+  }
 
-    if (newPassword.length < 6) {
-      toast.error('Mật khẩu phải có ít nhất 6 ký tự');
-      return;
-    }
+  if (newPassword !== confirmPassword) {
+    toast.error('Mật khẩu không khớp');
+    return;
+  }
 
-    try {
-      setLoading(true);
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/reset-password`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email, otp, newPassword })
-      });
-      const data = await res.json();
-      
-      if (data.alert) {
-        toast.success('Đổi mật khẩu thành công');
-        navigate('/login');
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error('Lỗi hệ thống');
-    } finally {
-      setLoading(false);
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/;
+  if (!passwordRegex.test(newPassword)) {
+    toast.error('Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ in hoa, số và ký tự đặc biệt');
+    return;
+  }
+
+  try {
+    setLoading(true);
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/reset-password`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, otp, newPassword })
+    });
+    const data = await res.json();
+
+    if (data.alert) {
+      toast.success('Đổi mật khẩu thành công');
+      navigate('/login');
+    } else {
+      toast.error(data.message);
     }
-  };
+  } catch (error) {
+    toast.error('Lỗi hệ thống');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="p-3 md:p-4">

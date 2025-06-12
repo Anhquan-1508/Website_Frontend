@@ -50,7 +50,6 @@ const Signup = () => {
             body: JSON.stringify({firstName, lastName, email, password, confirmPassword, image}),
           },
         );
-  
         const dataRes = await fetchData.json();
         toast(dataRes.message);
           

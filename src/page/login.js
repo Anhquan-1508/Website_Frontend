@@ -11,7 +11,6 @@ const Login = () => {
     password: '',
     otp: '',
   });
-
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -68,14 +67,13 @@ const Login = () => {
       alert('Please enter OTP');
     }
   };
-
+  
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
         <div className="w-20 overflow-hidden rounded-full drop-shadow-md shadow-md flex m-auto">
           <img src={loginSignupImage} alt="login" className="w-full" />
         </div>
-
         <form
           className="w-full py-3 flex flex-col"
           onSubmit={otpSent ? handleSubmitStep2 : handleSubmitStep1}
