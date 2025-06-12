@@ -15,11 +15,11 @@ const Contact = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const BACKEND_URL = "https://web-backend-61pg.onrender.com"; 
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/get-contacts");
+        const response = await axios.get(`${BACKEND_URL}/get-contacts`);
         setFeedbacks(response.data);
         setLoading(false);
       } catch (error) {
@@ -51,11 +51,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/submit-contact",
-        { name, email, phone, message }
-      );
-
+      const response = await axios.post(`${BACKEND_URL}/submit-contact`, { name, email, phone, message });
       const success = response.data.message;
       setSuccessMessage(success);
       setErrorMessage("");
